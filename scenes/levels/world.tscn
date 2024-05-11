@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://h6oktbn4qsae"]
+
+[ext_resource type="PackedScene" uid="uid://bse46fjsfh1ae" path="res://scenes/characters/player.tscn" id="1_y8fgm"]
+[ext_resource type="PackedScene" uid="uid://w1jadorsu5fi" path="res://scenes/objects/item.tscn" id="2_mndca"]
+[ext_resource type="PackedScene" uid="uid://brx6b213a8ueo" path="res://scenes/objects/wheel.tscn" id="3_s7mpx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m82b2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_gt8q6"]
+sky_material = SubResource("ProceduralSkyMaterial_m82b2")
+
+[sub_resource type="Environment" id="Environment_m1187"]
+background_mode = 2
+sky = SubResource("Sky_gt8q6")
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+adjustment_contrast = 8.0
+adjustment_saturation = 8.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jugof"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ogsc0"]
+material = SubResource("StandardMaterial3D_jugof")
+size = Vector2(2, 1.13)
+orientation = 2
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m1187")
+
+[node name="Player" parent="." instance=ExtResource("1_y8fgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16762, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(8.54199, 0.330078, 8.25293)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33911, -4.23411)
+use_collision = true
+size = Vector3(8.54199, 3.0083, 0.217297)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.139173, -0.512453, 0.847362, 0, 0.85569, 0.517489, -0.990268, -0.0720206, 0.119089, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Item" parent="." instance=ExtResource("2_mndca")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.60412, 1.3079, -0.312936)
+
+[node name="Wheel" parent="." instance=ExtResource("3_s7mpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.716873, -3.62229)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000752449, 1.52626, -4.12083)
+mesh = SubResource("PlaneMesh_ogsc0")
+
+[node name="Camera3D" type="Camera3D" parent="."]

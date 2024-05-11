@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://w1jadorsu5fi"]
+
+[ext_resource type="Script" path="res://scenes/objects/item_manager.gd" id="1_4pykw"]
+[ext_resource type="Texture2D" uid="uid://jxl52cd5edsu" path="res://icon.svg" id="1_o0ltb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vrn60"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_npa4t"]
+transparency = 4
+albedo_texture = ExtResource("1_o0ltb")
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0wlyy"]
+material = SubResource("StandardMaterial3D_npa4t")
+size = Vector2(0.3, 0.3)
+orientation = 2
+
+[node name="Item" type="Node3D"]
+script = ExtResource("1_4pykw")
+
+[node name="InteractArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("BoxShape3D_vrn60")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_0wlyy")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_player_entered"]
